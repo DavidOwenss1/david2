@@ -1,0 +1,83 @@
+# Import necessary libraries
+import random
+
+# Define player attributes
+player_health = 100
+player_damage = 20
+player_lvl = 1
+
+# Define enemy attributes
+enemy_health = 50
+enemy_damage = 10
+
+# Define a dictionary of rooms and their descriptions
+rooms = {
+    "Hall": "You are in the grand hall of an ancient castle.",
+    "Armory": "This room is filled with weapons and armor.",
+    "Library": "The library is full of dusty old books.",
+    "Dungeon": "You have stumbled into a dark and eerie dungeon."
+}
+
+# Define a list of puzzles
+puzzles = [
+    "Solve the riddle: What has keys but can't open locks?",
+    "Arrange the numbers 1 to 9 in a 3x3 grid such that the sums of each row, column, and diagonal are equal.",
+    "Crack the code: 3-7-1-8"
+]
+
+# Game loop
+while True:
+    # Randomly select a room from the dictionary
+    current_room = random.choice(list(rooms.keys()))
+
+    # Display the current room description
+    print("You are in the", current_room)
+    print(rooms[current_room])
+
+    # Check if the room has a puzzle
+    if random.random() < 0.5:
+        puzzle = random.choice(puzzles)
+        print("A puzzle awaits you!")
+        print(puzzle)
+
+        # Player attempts to solve the puzzle
+        answer = input("Enter your answer: ")
+
+        # Check if the answer is correct
+        if current_room == "Armory" and answer.lower() == "key":
+            print("Congratulations! You have found a powerful weapon!")
+            player_damage += 10
+        elif current_room == "Library" and answer.lower() == "magic":
+            print("Well done! You have gained magical powers!")
+            player_lvl += 1
+        elif current_room == "Dungeon" and answer == "3718":
+            print("Impressive! You have discovered a secret treasure!")
+            player_health += 50
+            
+    # Encounter an enemy
+    if random.random() < 0.4:
+        print("An enemy has appeared!")
+
+        # Battle loop
+        while player_health > 0 and enemy_health > 0:
+            # Player attacks enemy
+            enemy_health -= player_damage
+            print("You attacked the enemy! Enemy health:", enemy_health)
+
+            # Enemy attacks player
+            player_health -= enemy_damage
+            print("The enemy attacked you! Your health:", player_health)
+
+        # Check the outcome of the battle
+        if player_health <= 0:
+            print("Game Over! You were defeated by the enemy.")
+            break
+        else:
+            print("Congratulations! You have defeated the enemy and earned valuable experience!")
+            print("-----")
+
+    # Prompt the player to continue or quit
+    choice = input("Continue exploring? (yes/no): ")
+    if choice.lower() == "no":
+        print("Thank you for playing the game!")
+        break
